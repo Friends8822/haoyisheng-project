@@ -1,0 +1,154 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.course-list-title {
+  text-align: left;
+  margin-left: 20px;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+  width: 50%;
+  text-align: center;
+}
+
+.course-list li {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-info {
+  font-size: 16px;
+}
+
+.status-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.status-button[data-status="考试通过"] {
+  background-color: #28a745; /* 绿色 */
+  color: white;
+}
+
+.status-button[data-status="待考试"] {
+  background-color: #ffc107; /* 黄色 */
+  color: white;
+}
+
+.status-button[data-status="未学习"] {
+  background-color: #ccc; /* 灰色 */
+  color: white;
+}
+
+/* 新增的加载动画相关样式 */
+
+/* 加载动画容器样式 */
+#loadingCircle {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.8); /* 设置一个半透明的白色背景，可根据需求调整透明度 */
+    border-radius: 50%;
+    z-index: 1000; /* 确保加载动画在其他元素之上显示 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加一个淡淡的阴影，使其更有立体感 */
+}
+
+/* 多段式加载动画样式 */
+.loader {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: rotate 1.5s linear infinite; /* 整体旋转动画 */
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.loader:before {
+    box-shadow: inset 0 0 0 10px #3498db; /* 内层蓝色边框 */
+    animation: loaderBefore 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.loader:after {
+    box-shadow: inset 0 0 0 3px #f3f3f3; /* 内层白色边框 */
+    animation: loaderAfter 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* 定义整体旋转动画关键帧 */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 定义内层蓝色边框动画关键帧 */
+@keyframes loaderBefore {
+    0% {
+        box-shadow: inset 0 0 0 10px #3498db;
+        transform: scale(0);
+    }
+
+    50% {
+        box-shadow: inset 0 0 0 2px #3498db;
+        transform: scale(1);
+    }
+
+    100% {
+        box-shadow: inset 0 0 0 10px #3498db;
+        transform: scale(0);
+    }
+}
+
+/* 定义内层白色边框动画关键帧 */
+@keyframes loaderAfter {
+    0% {
+        box-shadow: inset 0 0 0 3px #f3f3f3;
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: inset 0 0 0 1px #f3f3f3;
+        transform: scale(0);
+    }
+
+    100% {
+        box-shadow: inset 0 0 0 3px #f3f3f3;
+        transform: scale(1);
+    }
+}

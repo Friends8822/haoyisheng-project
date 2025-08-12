@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../static/templates/favicon.ico" type="icon">
+  <title>登录页面</title>
+  <style>
+    /* 整体页面布局样式，让背景铺满整个视口 */
+    body {
+      font-family: sans-serif; /* 修改为系统默认无衬线字体，可根据情况再调整 */
+      background-color: #f8f9fa;
+      min-height: 100vh; /* 设置最小高度为视口高度，确保背景铺满 */
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 注册表单容器样式 */
+    form {
+      background-color: white;
+      padding: 20px; /* 适当调整表单容器内边距 */
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 800px; /* 进一步增加表单宽度，为输入框提供更多空间 */
+      text-align: center; /* 让表单内的元素水平居中 */
+    }
+
+    /* 表单标题样式 */
+    h2 {
+      text-align: center;
+      color: #343a40;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    /* 表单字段样式，增加输入框宽度 */
+    input[type="text"] {
+      width: 42%; /* 输入框宽度设置为表单容器宽度的100%，充分利用表单宽度 */
+      padding: 15px; /* 适当增加输入框内边距，使输入区域更明显 */
+      margin-bottom: 20px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 16px;
+      box-sizing: border-box; /* 确保输入框宽度包含边框和内边距 */
+      display: inline-block; /* 将输入框设置为行内块元素，以便水平居中 */
+    }
+
+    input[type="text"]:focus {
+      border-color: #007BFF;
+    }
+
+    /* 让cmesid标签和输入框在同一行显示 */
+ .form-group {
+      display: flex;
+      align-items: center;
+      justify-content: center; /* 让cmesid标签和输入框整体在水平方向居中 */
+    }
+
+    label {
+      margin-right: 10px;
+    }
+
+    /* 提交按钮样式 */
+    input[type="submit"] {
+      background-color: #007BFF;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* 调整表单容器内部布局，不再采用可能影响输入框长度的居中方式 */
+    form {
+      display: block;
+    }
+
+    /* 让提交按钮在表单内居中显示 */
+    form {
+      text-align: center;
+    }
+
+    input[type="submit"] {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="registrationForm" action="/login" method="post">
+    <h2>好医生-继续医学教育考试--<a href="/md">使用说明</a></h2>
+    <div class="form-group">
+      <label for="cmesid">cmesid:</label>
+      <input type="text" id="cmesid" name="cmesid" required>
+    </div>
+    <input type="submit" value="登录">
+    <h4>本网站仅供学习测试使用，请勿商用或做其他用途，否则后果自负！</h4>
+  </form>
+
+  <script>
+    // 新增：监听浏览器后退按钮点击事件
+    window.onpopstate = function (event) {
+      // 这里执行刷新页面的操作
+      location.reload();
+    };
+    // 获取表单元素
+    const registrationForm = document.getElementById('registrationForm');
+
+    // 给提交按钮添加点击事件监听器
+    registrationForm.addEventListener('submit', function (e) {
+      e.preventDefault(); /* 阻止表单默认提交行为 */
+
+      // 这里无需像之前那样构建JSON数据并手动发送请求
+      // 因为表单会自动按照其属性设置进行提交
+
+      // 直接让表单提交
+      registrationForm.submit();
+    });
+  </script>
+</body>
+
+</html>

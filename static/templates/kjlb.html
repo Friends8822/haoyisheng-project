@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../static/css/kclb.css">
+  <link rel="icon" href="../../static/templates/favicon.ico" type="icon">
+  <title>课程列表</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="course-list-title">课程列表</h1>
+    <h3>单击待考试，即可自动完成考试，过程中请勿其他操作</h3>
+    <p>问：既然都做到这了，为何不做一键全部考试，而需要一个一个考&nbsp;&nbsp;&nbsp;答：为了避免被检测，（好吧，其实是因为懒）</p>
+    <p>问：为什么考试这么慢&nbsp;&nbsp;&nbsp;答：因为考的太快不知道会不会被检测</p>
+    <p>偷偷告诉你：其实未学习的课件也是可以考试的，考试通过后，视频就可以随意拖动，从而快速完成</p>
+    <ul class="course-list">
+      {% for record in kjlb %}
+      <li>
+        <div class="course-info">{{ record.0 }}</div>
+        <button class="status-button" data-status="{{ record.1 }}" onclick="handleButtonClick('{{ record.1 }}','{{ cmesid }}','{{ course_id }}','{{ record.2 }}')">{{ record.1 }}</button>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- 新增的提示框元素 -->
+  <div id="alertBox" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid #ddd; border-radius: 5px; padding: 15px; text-align: center;">
+    <p id="alertMessage"></p>
+    <button onclick="closeAlertBox()">确定</button>
+  </div>
+
+  <!-- 加载动画元素 -->
+  <div id="loadingCircle" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px;">
+    <div class="loader"></div>
+  </div>
+
+  <script>
+    // 新增：监听浏览器后退按钮点击事件
+    window.onpopstate = function (event) {
+      // 这里执行刷新页面的操作
+      location.reload();
+    };
+
+    function handleButtonClick(status, cmesid, course_id, courseware_id) {
+      if (status === "考试通过") {
+        document.getElementById('alertMessage').innerHTML = "恭喜你，考试已通过！";
+        showAlertBox();
+      } else if (status === "未学习") {
+        // document.getElementById('alertMessage').innerHTML = "请学习完课程后再来考试吧！";
+        // showAlertBox();     这里让未学习的课程也能考试
+        sendRequestForExam(cmesid, course_id, courseware_id);
+      } else if (status === "待考试") {
+        // 这里假设你会使用AJAX或者fetch等方式发送请求，以下只是示例函数名，实际需完善
+        sendRequestForExam(cmesid, course_id, courseware_id);
+      }
+    }
+
+    function showAlertBox() {
+      document.getElementById('alertBox').style.display = "block";
+    }
+
+    function closeAlertBox() {
+      document.getElementById('alertBox').style.display = "none";
+    }
+
+    // 待完善的发送请求函数，示例如下（实际需根据后端接口等情况修改）
+    function sendRequestForExam(cmesid, course_id, courseware_id) {
+      // 显示加载圈
+      document.getElementById('loadingCircle').style.display = "block";
+
+      // 使用fetch API发送请求示例，这里假设后端有个/api/exam-request的接口来处理待考试的请求
+      fetch('/Course/exam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          // 这里可以根据需要添加请求体的内容，比如课程相关信息等
+          cmesid: cmesid,
+          course_id: course_id,
+          courseware_id: courseware_id
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data === "考试通过") {
+            location.reload(); // 刷新页面
+          }
+          // 隐藏加载圈，无论请求成功还是失败都要隐藏
+          document.getElementById('loadingCircle').style.display = "none";
+        })
+      .catch(error => {
+          // 处理错误
+          console.error(error);
+          // 隐藏加载圈
+          document.getElementById('loadingCircle').style.display = "none";
+        });
+    }
+  </script>
+</body>
+
+</html>

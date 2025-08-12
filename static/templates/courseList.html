@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/courseList.css">
+    <link rel="icon" href="../../static/templates/favicon.ico" type="icon">
+    <title>学习记录页面</title>
+</head>
+
+<body>
+    <!-- 顶部用户信息栏 -->
+    <div class="user-info">
+        <p><span>用户名：</span>{{ personal_info.姓名 }}</p>
+        <p><span>科室：</span>{{ personal_info.科室 }}</p>
+        <p><span>机构：</span>{{ personal_info.机构 }}</p>
+        <p><span>单位：</span>{{ personal_info.单位 }}</p>
+    </div>
+
+    <!-- 表格部分 -->
+    <table class="learning-table">
+        <thead>
+            <tr>
+                <th>项目名称</th>
+                <th>学分</th>
+                <th>学习状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in table_info %}
+            <tr>
+                <td>{{ record.项目名称 }}</td>
+                <td>{{ record.学分 }}</td>
+                <td>{{ record.学习状态 }}</td>
+                <td><button onclick="redirectToCoursePage('{{ cmesid }}','{{ record.course_id }}')">{{ record.操作 }}</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function redirectToCoursePage(cmesid, courseId) {
+            // 构建重定向的URL
+            // 使用window.location.href进行重定向
+            window.location.href = "/Course/course?cmesid=" + cmesid + "&course_id=" + courseId;
+        }
+    </script>
+</body>
+
+</html>
