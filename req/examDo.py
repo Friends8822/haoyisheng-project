@@ -8,7 +8,46 @@ def exam_do(cmesid,course_id,paper_id,ques_num,fail_num,sign,cw_id,ques_list,ans
 
 
 
+    
+
+# ========== 调试打印：显示原始传入参数 ==========
+    print("=" * 50)
+    print("【DEBUG】exam_do 接收到的参数：")
+    print(f"  cmesid: {cmesid}")
+    print(f"  course_id: {course_id}")
+    print(f"  paper_id: {paper_id}")
+    print(f"  ques_num: {ques_num}")
+    print(f"  fail_num: {fail_num}")
+    print(f"  sign: {sign}")
+    print(f"  cw_id: {cw_id}")
+    print(f"  ques_list (原始): {ques_list}")
+    print(f"  answ_num_list: {answ_num_list}")
+    print(f"  xx (原始): {xx}")
+    print(f"  xx 长度: {len(xx) if xx else 'None'}")
+    print("=" * 50)
+    # ================================================
+
     ques_list = ques_list.split(",")
+
+    # ========== 调试打印：split 后的结果 ==========
+    print(f"【DEBUG】ques_list split 后: {ques_list}")
+    print(f"【DEBUG】ques_list 长度: {len(ques_list)}")
+    print(f"【DEBUG】xx 长度: {len(xx) if xx else 'None'}")
+    # =============================================
+
+    # 确保至少有5个元素，不足的用空字符串填充
+    while len(ques_list) < 5:
+        ques_list.append("")
+    while len(xx) < 5:
+        xx.append("")
+
+    # ========== 调试打印：填充后的结果 ==========
+    print(f"【DEBUG】填充后 ques_list: {ques_list}")
+    print(f"【DEBUG】填充后 xx: {xx}")
+    print("=" * 50)
+    # ============================================
+
+
 
     cookies = {
         "cmesid": cmesid,
